@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOC Estofados — Reforma e Restauração de Estofados</title>
+<meta name="description" content="Reforma de sofás, poltronas, cabeceiras e estofados em geral. Troca de tecido, troca de espuma e acabamento premium. Orçamento sem compromisso.">
+<meta property="og:title" content="WOC Estofados — Seu estofado com aparência de novo.">
+<meta property="og:description" content="Reforma, troca de tecido, troca de espuma e reparos em geral, com acabamento premium.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F5F1;
+    --bg-alt:#EEECE5;
+    --charcoal:#1A1917;
+    --graphite:#5C584F;
+    --graphite-soft:#8A8578;
+    --gold:#A9812F;
+    --gold-light:#C9A34F;
+    --navy:#16233A;
+    --white:#FFFFFF;
+    --line:#DEDACF;
+    --radius:2px;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--charcoal);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:600;letter-spacing:-0.01em;color:var(--charcoal);}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);display:inline-block;}
+  .section-title{font-size:clamp(28px,4vw,40px);line-height:1.15;margin-bottom:16px;}
+  .section-sub{color:var(--graphite);max-width:560px;font-size:16px;}
+  .section{padding:96px 0;position:relative;}
+  .section.alt{background:var(--bg-alt);}
+
+  /* Stitch seam divider — signature motif */
+  .seam{
+    height:1px;width:100%;
+    background-image:repeating-linear-gradient(90deg,var(--gold-light) 0 10px, transparent 10px 20px);
+    opacity:.55;
+  }
+  .seam-wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:15px 30px;font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;
+    letter-spacing:.02em;border-radius:var(--radius);cursor:pointer;border:1px solid transparent;
+    transition:transform .35s var(--ease),background .3s,border-color .3s,color .3s;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--charcoal);color:var(--white);}
+  .btn-primary:hover{background:var(--navy);}
+  .btn-outline{background:transparent;color:var(--charcoal);border-color:var(--charcoal);}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-gold{background:var(--gold);color:var(--white);}
+  .btn-gold:hover{background:#8f6c25;}
+
+  /* Header */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(246,245,241,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s,background .3s;
+  }
+  header.scrolled{border-bottom-color:var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px;}
+  .logo{font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;letter-spacing:.02em;}
+  .logo span{color:var(--gold);}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{font-size:14.5px;font-weight:500;color:var(--graphite);transition:color .25s;position:relative;}
+  .nav-links a:hover{color:var(--charcoal);}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:width .3s var(--ease);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{display:flex;align-items:center;gap:18px;}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+  .burger span{width:22px;height:1.5px;background:var(--charcoal);display:block;transition:transform .3s,opacity .3s;}
+  .mobile-panel{
+    display:none;position:fixed;inset:78px 0 0 0;background:var(--bg);z-index:99;
+    padding:36px 28px;flex-direction:column;gap:26px;
+  }
+  .mobile-panel.open{display:flex;}
+  .mobile-panel a{font-size:20px;font-family:'Poppins',sans-serif;font-weight:500;}
+
+  /* Hero */
+  .hero{
+    padding:180px 0 110px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 70%,var(--bg-alt) 100%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;}
+  .hero h1{font-size:clamp(38px,5.4vw,60px);line-height:1.08;margin-bottom:22px;}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero p{font-size:18px;color:var(--graphite);max-width:480px;margin-bottom:36px;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px;}
+  .hero-stats{display:flex;gap:38px;}
+  .hero-stats div{border-left:1px solid var(--line);padding-left:16px;}
+  .hero-stats strong{display:block;font-family:'Poppins',sans-serif;font-size:26px;color:var(--charcoal);}
+  .hero-stats span{font-size:12.5px;color:var(--graphite-soft);text-transform:uppercase;letter-spacing:.08em;}
+
+  .hero-art{position:relative;display:flex;align-items:center;justify-content:center;}
+  .hero-art svg{width:100%;max-width:460px;height:auto;}
+  .hero-art .halo{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(169,129,47,.14),transparent 70%);z-index:0;}
+  .hero-art .stitch-orbit{position:absolute;inset:0;}
+  .hero-art .stitch-orbit circle{fill:none;stroke:var(--gold-light);stroke-width:1;stroke-dasharray:3 7;opacity:.5;}
+
+  /* Reveal on scroll */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* Services */
+  .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px;}
+  .service-card{background:var(--bg);padding:34px 26px;transition:background .3s;}
+  .service-card:hover{background:var(--white);}
+  .service-icon{width:38px;height:38px;color:var(--gold);margin-bottom:20px;}
+  .service-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+  .service-card h3{font-size:16px;margin-bottom:8px;}
+  .service-card p{font-size:13.5px;color:var(--graphite-soft);line-height:1.55;}
+
+  /* Before / After slider */
+  .compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin-top:56px;}
+  .compare{
+    position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);cursor:ew-resize;user-select:none;
+  }
+  .compare .layer{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:flex-start;padding:18px;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;}
+  .compare .before{background:repeating-linear-gradient(135deg,#cfc9ba,#cfc9ba 2px,#bdb6a4 2px,#bdb6a4 4px);color:#4a4636;}
+  .compare .after{background:linear-gradient(135deg,#3a3226,#1A1917 60%);color:var(--gold-light);clip-path:inset(0 0 0 50%);}
+  .compare .handle{
+    position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);
+    transform:translateX(-1px);pointer-events:none;
+  }
+  .compare .handle::after{
+    content:"↔";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:38px;height:38px;background:var(--gold);color:var(--white);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .compare-note{font-size:13px;color:var(--graphite-soft);margin-top:14px;}
+  .compare-copy h3{font-size:24px;margin-bottom:14px;}
+  .compare-copy p{color:var(--graphite);margin-bottom:14px;}
+  .compare-copy ul li{position:relative;padding-left:22px;margin-bottom:10px;color:var(--graphite);font-size:14.5px;}
+  .compare-copy ul li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:1px;background:var(--gold);}
+
+  /* Portfolio */
+  .filter-row{display:flex;gap:10px;flex-wrap:wrap;margin:40px 0 0;}
+  .filter-btn{
+    padding:9px 18px;border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:500;
+    background:transparent;cursor:pointer;color:var(--graphite);transition:all .25s;
+  }
+  .filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:32px;}
+  .p-card{border:1px solid var(--line);background:var(--white);overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s;}
+  .p-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(26,25,23,.08);}
+  .p-thumb{
+    aspect-ratio:4/3;background:linear-gradient(135deg,var(--bg-alt),#e3dfd4);
+    display:flex;align-items:center;justify-content:center;color:var(--graphite-soft);position:relative;
+  }
+  .p-thumb svg{width:34px;height:34px;stroke:var(--gold-light);fill:none;stroke-width:1.3;}
+  .p-info{padding:18px 20px;}
+  .p-info .cat{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:block;}
+  .p-info h4{font-size:15.5px;font-weight:500;font-family:'Inter',sans-serif;color:var(--charcoal);}
+
+  /* Como funciona */
+  .steps{position:relative;margin-top:64px;}
+  .steps::before{
+    content:"";position:absolute;left:29px;top:10px;bottom:10px;width:0;
+    border-left:2px dashed var(--gold-light);opacity:.6;
+  }
+  .step{display:grid;grid-template-columns:60px 1fr;gap:26px;padding-bottom:48px;position:relative;}
+  .step:last-child{padding-bottom:0;}
+  .step-num{
+    width:60px;height:60px;border-radius:50%;background:var(--white);border:1px solid var(--gold-light);
+    display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:600;
+    font-size:18px;color:var(--gold);z-index:1;
+  }
+  .step h4{font-size:18px;margin-bottom:8px;}
+  .step p{color:var(--graphite);font-size:14.5px;max-width:520px;}
+
+  /* Diferenciais */
+  .about-row{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .about-row p{color:var(--graphite);margin-bottom:18px;max-width:520px;}
+  .stat-row{display:flex;gap:40px;margin-top:30px;}
+  .stat-row div strong{display:block;font-family:'Poppins',sans-serif;font-size:30px;color:var(--gold);}
+  .stat-row div span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--graphite-soft);}
+
+  .diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);margin-top:56px;}
+  .diff-card{background:var(--charcoal);color:var(--white);padding:36px 28px;}
+  .diff-card .service-icon{color:var(--gold-light);}
+  .diff-card h3{color:var(--white);font-size:16px;margin-bottom:8px;}
+  .diff-card p{color:#B9B5AA;font-size:13.5px;}
+
+  /* Depoimentos */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;}
+  .testi-card{background:var(--white);border:1px solid var(--line);padding:32px 28px;position:relative;}
+  .testi-card .quote-mark{font-family:'Poppins',sans-serif;font-size:44px;color:var(--gold-light);line-height:1;margin-bottom:6px;}
+  .testi-card p{color:var(--graphite);font-size:14.5px;margin-bottom:22px;}
+  .testi-person{display:flex;align-items:center;gap:12px;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--bg-alt);display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;color:var(--gold);}
+  .testi-person strong{display:block;font-size:14px;}
+  .testi-person span{font-size:12px;color:var(--graphite-soft);}
+
+  /* CTA final */
+  .cta-final{
+    background:var(--navy);color:var(--white);text-align:center;padding:96px 0;
+  }
+  .cta-final h2{color:var(--white);font-size:clamp(28px,4vw,42px);max-width:680px;margin:0 auto 34px;}
+  .cta-final .btn-gold{padding:19px 42px;font-size:16px;}
+
+  /* Footer */
+  footer{background:var(--charcoal);color:#B9B5AA;padding:64px 0 30px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .foot-logo{font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;color:var(--white);margin-bottom:14px;}
+  .foot-logo span{color:var(--gold-light);}
+  .foot-grid p{font-size:13.5px;max-width:280px;line-height:1.6;}
+  .foot-col h5{color:var(--white);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;font-family:'Inter',sans-serif;}
+  .foot-col li{margin-bottom:10px;font-size:14px;}
+  .foot-col a:hover{color:var(--gold-light);}
+  .social-row{display:flex;gap:12px;margin-top:16px;}
+  .social-row a{width:34px;height:34px;border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .25s,color .25s;}
+  .social-row a:hover{border-color:var(--gold-light);color:var(--gold-light);}
+  .social-row svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.5;}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:12.5px;flex-wrap:wrap;gap:10px;}
+
+  /* Floating WhatsApp */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:90;
+    width:58px;height:58px;border-radius:50%;background:#25D366;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.25);
+    transition:transform .3s var(--ease);
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:28px;height:28px;fill:var(--white);}
+
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-art{order:-1;max-width:320px;margin:0 auto 20px;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .diff-grid{grid-template-columns:repeat(2,1fr);}
+    .portfolio-grid{grid-template-columns:repeat(2,1fr);}
+    .testi-grid{grid-template-columns:1fr;}
+    .compare-wrap{grid-template-columns:1fr;}
+    .about-row{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .nav-cta .btn-outline{display:none;}
+    .burger{display:flex;}
+  }
+  @media (max-width:600px){
+    .services-grid{grid-template-columns:1fr 1fr;}
+    .diff-grid{grid-template-columns:1fr;}
+    .portfolio-grid{grid-template-columns:1fr;}
+    .hero-stats{gap:22px;flex-wrap:wrap;}
+    .section{padding:72px 0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <a href="#inicio" class="logo">WOC <span>Estofados</span></a>
+    <nav class="nav-links">
+      <a href="#inicio">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contato" class="btn btn-outline">Solicitar Orçamento</a>
+      <button class="burger" id="burger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#inicio">Início</a>
+  <a href="#servicos">Serviços</a>
+  <a href="#portfolio">Portfólio</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#contato">Contato</a>
+  <a href="#contato" class="btn btn-primary" style="margin-top:10px;width:fit-content;">Solicitar Orçamento</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Estofaria artesanal</span>
+      <h1 class="reveal">Seu estofado com <em>aparência de novo.</em></h1>
+      <p class="reveal">Reforma de sofás e poltronas, troca de tecido, troca de espuma e reparos em geral — com acabamento premium e o cuidado de quem trabalha com estofados todos os dias.</p>
+      <div class="hero-actions reveal">
+        <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
+        <a href="#portfolio" class="btn btn-outline">Ver Portfólio</a>
+      </div>
+      <div class="hero-stats reveal">
+        <div><strong>+500</strong><span>Estofados renovados</span></div>
+        <div><strong>15</strong><span>Anos de ofício</span></div>
+        <div><strong>4.9</strong><span>Avaliação média</span></div>
+      </div>
+    </div>
+    <div class="hero-art reveal">
+      <div class="halo"></div>
+      <svg class="stitch-orbit" viewBox="0 0 460 460"><circle cx="230" cy="230" r="200"/></svg>
+      <svg viewBox="0 0 400 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="140" width="320" height="120" rx="14" stroke="#1A1917" stroke-width="2.2"/>
+        <path d="M40 190 C40 160 65 150 95 150 H305 C335 150 360 160 360 190" stroke="#1A1917" stroke-width="2.2"/>
+        <rect x="55" y="70" width="80" height="90" rx="10" stroke="#A9812F" stroke-width="2.2"/>
+        <rect x="265" y="70" width="80" height="90" rx="10" stroke="#A9812F" stroke-width="2.2"/>
+        <line x1="40" y1="260" x2="40" y2="300" stroke="#1A1917" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="90" y1="260" x2="90" y2="300" stroke="#1A1917" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="310" y1="260" x2="310" y2="300" stroke="#1A1917" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="360" y1="260" x2="360" y2="300" stroke="#1A1917" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M100 200 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" stroke="#C9A34F" stroke-width="1.4" stroke-dasharray="2 5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- SERVIÇOS -->
+<section class="section" id="servicos">
+  <div class="wrap">
+    <span class="eyebrow reveal">O que fazemos</span>
+    <h2 class="section-title reveal">Um serviço completo para cada tipo de estofado</h2>
+    <p class="section-sub reveal">Da reforma estrutural ao acabamento final, cuidamos de cada etapa com materiais selecionados e mão de obra especializada.</p>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 12v5a1 1 0 0 0 1 1h1v2M20 12v5a1 1 0 0 1-1 1h-1v2"/><path d="M3 12V9a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v3"/><path d="M3 12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2"/></svg></div>
+        <h3>Reforma de Sofás</h3>
+        <p>Estrutura revisada, espuma renovada e tecido novo — o sofá volta a ficar como no primeiro dia.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M5 21V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v12"/><path d="M5 15h14"/><path d="M9 3v4M15 3v4"/></svg></div>
+        <h3>Reforma de Assentos de Cadeiras</h3>
+        <p>Reforço da base, nova espuma e acabamento sob medida para o design de cada cadeira.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M6 21V11a6 6 0 0 1 12 0v10"/><path d="M6 21h12"/></svg></div>
+        <h3>Cabeceiras Estofadas</h3>
+        <p>Cabeceiras capitonê ou lisas, com o tecido e o volume que combinam com o quarto.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="9" rx="2"/><path d="M7 8V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/></svg></div>
+        <h3>Bancos</h3>
+        <p>Bancos de cozinha, bar ou área externa, com estofamento firme e durável.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/></svg></div>
+        <h3>Pufes</h3>
+        <p>Renovação completa de pufes redondos, retangulares ou baú, com nova espuma interna.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg></div>
+        <h3>Placas Estofadas</h3>
+        <p>Painéis capitonê para cabeceiras e paredes, produzidos sob medida.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 4c4 0 7 3 7 7s-3 7-7 7-7-3-7-7 3-7 7-7Z"/><path d="M9 9c1-1 5-1 6 0"/></svg></div>
+        <h3>Almofadas</h3>
+        <p>Enchimento e capas novas, no tamanho e tecido que você escolher.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 6h13l5 5v7a2 2 0 0 1-2 2H3Z"/><path d="M3 6v13"/><path d="M8 21v-6h5v6"/></svg></div>
+        <h3>Troca de Tecido</h3>
+        <p>Amplo catálogo de tecidos e couros para renovar a cor e o estilo do estofado.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="4" rx="1"/><rect x="4" y="13" width="16" height="4" rx="1"/></svg></div>
+        <h3>Troca de Espuma</h3>
+        <p>Espumas de densidade adequada para recuperar o conforto e a firmeza do assento.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3"/><path d="M17 3l4 4-2 2-4-4 2-2Z"/></svg></div>
+        <h3>Reparos em Geral</h3>
+        <p>Costuras, ferragens, molas e pequenos consertos que devolvem a estrutura ao lugar.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5Z"/></svg></div>
+        <h3>Acabamento Premium</h3>
+        <p>Detalhes de costura, alinhamento e acabamento que fazem a diferença de perto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- ANTES E DEPOIS -->
+<section class="section alt" id="antes-depois">
+  <div class="wrap">
+    <span class="eyebrow reveal">Transformação real</span>
+    <h2 class="section-title reveal">Antes e depois</h2>
+    <p class="section-sub reveal">Arraste o controle para comparar o estado original com o resultado final da reforma.</p>
+
+    <div class="compare-wrap">
+      <div class="reveal">
+        <div class="compare" id="compareSlider">
+          <div class="layer before">Antes</div>
+          <div class="layer after" id="afterLayer">Depois</div>
+          <div class="handle" id="handle" style="left:50%"></div>
+        </div>
+        <p class="compare-note">* Imagem ilustrativa. Substitua pelas fotos reais dos projetos da WOC Estofados.</p>
+      </div>
+      <div class="compare-copy reveal">
+        <h3>O tecido novo é só a parte visível</h3>
+        <p>Antes de qualquer tecido novo, avaliamos a estrutura de madeira, as molas e a espuma. É esse trabalho de base que garante um estofado bonito por muitos anos — não só nas primeiras fotos.</p>
+        <ul>
+          <li>Diagnóstico completo da estrutura e do estofamento</li>
+          <li>Troca de espuma com densidade adequada ao uso</li>
+          <li>Tecido e acabamento escolhidos junto com você</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- PORTFÓLIO -->
+<section class="section" id="portfolio">
+  <div class="wrap">
+    <span class="eyebrow reveal">Trabalhos realizados</span>
+    <h2 class="section-title reveal">Portfólio</h2>
+    <p class="section-sub reveal">Uma amostra dos projetos entregues, organizados por categoria.</p>
+
+    <div class="filter-row reveal">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="sofas">Sofás</button>
+      <button class="filter-btn" data-filter="cadeiras">Cadeiras</button>
+      <button class="filter-btn" data-filter="cabeceiras">Cabeceiras</button>
+      <button class="filter-btn" data-filter="pufes">Pufes &amp; Bancos</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+      <!-- cards inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- COMO FUNCIONA -->
+<section class="section alt" id="como-funciona">
+  <div class="wrap">
+    <span class="eyebrow reveal">Do orçamento à entrega</span>
+    <h2 class="section-title reveal">Como funciona</h2>
+    <p class="section-sub reveal">Um processo simples, pensado para dar previsibilidade do início ao fim.</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div><h4>Envie fotos do estofado</h4><p>Fotografe o sofá, poltrona ou cadeira e nos envie pelo WhatsApp, com as medidas se tiver.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div><h4>Receba um orçamento</h4><p>Analisamos o estado da peça e enviamos um orçamento detalhado, sem compromisso.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div><h4>Coleta ou entrega do móvel</h4><p>Combinamos a melhor forma de retirar o estofado ou recebê-lo em nossa oficina.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div><h4>Reforma e acabamento</h4><p>Executamos a reforma com acompanhamento do processo e atenção a cada detalhe.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">05</div>
+        <div><h4>Entrega do produto renovado</h4><p>Seu estofado volta para casa pronto, revisado e com aparência de novo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- SOBRE + DIFERENCIAIS -->
+<section class="section" id="sobre">
+  <div class="wrap">
+    <div class="about-row">
+      <div class="reveal">
+        <span class="eyebrow">Sobre a WOC</span>
+        <h2 class="section-title">Ofício, cuidado e acabamento à mão</h2>
+        <p>A WOC Estofados nasceu do gosto por transformar peças desgastadas em estofados que parecem ter saído da loja. Trabalhamos com tecidos e materiais selecionados, e cada etapa é conferida antes de seguir para a próxima.</p>
+        <p>Atendemos projetos residenciais e comerciais, sempre com orçamento claro e prazo combinado antes de começar.</p>
+        <div class="stat-row">
+          <div><strong>+500</strong><span>Estofados entregues</span></div>
+          <div><strong>15</strong><span>Anos de experiência</span></div>
+          <div><strong>100%</strong><span>Orçamento sem compromisso</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Diferenciais</span>
+        <h2 class="section-title">Por que escolher a WOC</h2>
+        <p class="section-sub">O que garante o padrão de qualidade em cada estofado que sai da nossa oficina.</p>
+      </div>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5Z"/></svg></div>
+        <h3>Acabamento de alta qualidade</h3>
+        <p>Costuras alinhadas e detalhes conferidos antes da entrega.</p>
+      </div>
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 6h13l5 5v7a2 2 0 0 1-2 2H3Z"/></svg></div>
+        <h3>Materiais premium</h3>
+        <p>Tecidos, espumas e ferragens selecionados para durar.</p>
+      </div>
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Atendimento personalizado</h3>
+        <p>Escolha do tecido e do acabamento junto com você.</p>
+      </div>
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3"/></svg></div>
+        <h3>Profissionais experientes</h3>
+        <p>Equipe dedicada ao ofício de estofar há anos.</p>
+      </div>
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Orçamento sem compromisso</h3>
+        <p>Você só decide seguir depois de conhecer o valor.</p>
+      </div>
+      <div class="diff-card reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Compromisso com a satisfação</h3>
+        <p>Acompanhamos o resultado até você aprovar a entrega.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="seam-wrap"><div class="seam"></div></div>
+
+<!-- DEPOIMENTOS -->
+<section class="section alt" id="depoimentos">
+  <div class="wrap">
+    <span class="eyebrow reveal">Quem já reformou com a gente</span>
+    <h2 class="section-title reveal">Depoimentos</h2>
+    <p class="section-sub reveal">Experiências de clientes que renovaram seus estofados com a WOC. <em style="color:var(--graphite-soft);font-style:normal;">(Substitua pelos depoimentos reais dos seus clientes.)</em></p>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="quote-mark">“</div>
+        <p>O sofá voltou parecendo novo. O acabamento ficou melhor do que eu esperava e o prazo foi respeitado.</p>
+        <div class="testi-person"><div class="avatar">MF</div><div><strong>Marina F.</strong><span>Reforma de sofá</span></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="quote-mark">“</div>
+        <p>Troquei o tecido de quatro cadeiras e o resultado foi impecável. Atendimento atencioso do início ao fim.</p>
+        <div class="testi-person"><div class="avatar">RC</div><div><strong>Rodrigo C.</strong><span>Cadeiras de jantar</span></div></div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="quote-mark">“</div>
+        <p>Pedi orçamento pelo WhatsApp e todo o processo foi simples. A cabeceira ficou linda.</p>
+        <div class="testi-person"><div class="avatar">AL</div><div><strong>Ana L.</strong><span>Cabeceira estofada</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="contato">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="color:var(--gold-light);">Vamos começar</span>
+    <h2>Renove seus estofados com quem entende do assunto!</h2>
+    <a href="https://wa.me/5515996472451" target="_blank" rel="noopener" class="btn btn-gold">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11 11 0 0 0 3.7 17.4L2 22l4.7-1.6A11 11 0 1 0 20.5 3.5Zm-8.4 16.9a9 9 0 0 1-4.6-1.2l-.3-.2-3 1 1-2.9-.2-.3a9 9 0 1 1 7.1 3.6Zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1a7.3 7.3 0 0 1-2.2-1.3 8 8 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.4 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.3c0 1.3 1 2.6 1.1 2.8.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.3-.1-.1-.3-.2-.5-.3Z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">WOC <span>Estofados</span></div>
+        <p>Reforma e restauração de estofados com acabamento premium. Sofás, poltronas, cadeiras, cabeceiras e muito mais.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M15 8h-2a2 2 0 0 0-2 2v10M9 13h4"/></svg></a>
+          <a href="https://wa.me/5515996472451" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M4 20l1.4-4.1A8 8 0 1 1 9 18.6Z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Contato</h5>
+        <ul>
+          <li><a href="https://wa.me/5515996472451" target="_blank" rel="noopener">(15) 99647-2451</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#portfolio">Portfólio</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Oficina</h5>
+        <ul>
+          <li>Endereço a confirmar</li>
+          <li>Seg. a Sáb. — 8h às 18h</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span id="year-copy">© 2026 WOC Estofados. Todos os direitos reservados.</span>
+      <span>Feito com cuidado, ponto a ponto.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5515996472451" target="_blank" rel="noopener" class="wa-float" aria-label="Conversar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11 11 0 0 0 3.7 17.4L2 22l4.7-1.6A11 11 0 1 0 20.5 3.5Zm-8.4 16.9a9 9 0 0 1-4.6-1.2l-.3-.2-3 1 1-2.9-.2-.3a9 9 0 1 1 7.1 3.6Zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1a7.3 7.3 0 0 1-2.2-1.3 8 8 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.4 0-.5l-.8-2c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.3c0 1.3 1 2.6 1.1 2.8.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.3-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const panel = document.getElementById('mobilePanel');
+  burger.addEventListener('click', () => panel.classList.toggle('open'));
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Before/After slider
+  const compare = document.getElementById('compareSlider');
+  const afterLayer = document.getElementById('afterLayer');
+  const handle = document.getElementById('handle');
+  let dragging = false;
+
+  function setPos(clientX){
+    const rect = compare.getBoundingClientRect();
+    let pct = ((clientX - rect.left) / rect.width) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    afterLayer.style.clipPath = `inset(0 0 0 ${pct}%)`;
+    handle.style.left = pct + '%';
+  }
+  compare.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => dragging = false);
+  compare.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
+  compare.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', () => dragging = false);
+
+  // Portfolio data + filter
+  const portfolioData = [
+    {cat:'sofas', label:'Sofás', title:'Sofá 3 lugares — linho cru'},
+    {cat:'sofas', label:'Sofás', title:'Sofá retrátil — couro sintético'},
+    {cat:'cadeiras', label:'Cadeiras', title:'Jogo de 6 cadeiras — veludo'},
+    {cat:'cadeiras', label:'Cadeiras', title:'Cadeira de escritório — courino'},
+    {cat:'cabeceiras', label:'Cabeceiras', title:'Cabeceira capitonê — casal'},
+    {cat:'cabeceiras', label:'Cabeceiras', title:'Cabeceira lisa — queen'},
+    {cat:'pufes', label:'Pufes & Bancos', title:'Puf redondo — suede'},
+    {cat:'pufes', label:'Pufes & Bancos', title:'Banco de cozinha — par'},
+    {cat:'sofas', label:'Sofás', title:'Poltrona — linho bege'},
+  ];
+  const grid = document.getElementById('portfolioGrid');
+  const icon = '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 5"/></svg>';
+
+  function renderPortfolio(filter){
+    grid.innerHTML = '';
+    portfolioData
+      .filter(p => filter === 'all' || p.cat === filter)
+      .forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'p-card reveal';
+        card.innerHTML = `
+          <div class="p-thumb">${icon}</div>
+          <div class="p-info">
+            <span class="cat">${p.label}</span>
+            <h4>${p.title}</h4>
+          </div>`;
+        grid.appendChild(card);
+        io.observe(card);
+        requestAnimationFrame(() => card.classList.add('in'));
+      });
+  }
+  renderPortfolio('all');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPortfolio(btn.dataset.filter);
+    });
+  });
+
+  // Footer year
+  document.getElementById('year-copy').textContent =
+    `© ${new Date().getFullYear()} WOC Estofados. Todos os direitos reservados.`;
+</script>
+</body>
+</html>
