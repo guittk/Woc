@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedir Orçamento — WOC Estofados</title>
+<meta name="description" content="Envie fotos e detalhes do seu estofado e receba um orçamento sem compromisso da WOC Estofados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/orcamento.css">
+</head>
+<body>
+
+<header id="site-header" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo">WOC <span>Estofados</span></a>
+    <nav class="nav-links">
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#portfolio">Portfólio</a>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://wa.me/5515996472451" target="_blank" rel="noopener" class="btn btn-outline">Falar no WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="index.html">Início</a>
+  <a href="index.html#servicos">Serviços</a>
+  <a href="index.html#portfolio">Portfólio</a>
+  <a href="index.html#sobre">Sobre</a>
+  <a href="index.html#contato">Contato</a>
+</div>
+
+<section class="section orc-hero">
+  <div class="wrap">
+    <span class="eyebrow">Solicitação de orçamento</span>
+    <h1 class="section-title">Conte pra gente sobre o seu estofado</h1>
+    <p class="section-sub">Envie fotos, descreva a situação atual e o que precisa ser feito. Nossa equipe analisa e retorna com um orçamento pelo WhatsApp — sem compromisso.</p>
+
+    <form id="orcamentoForm" class="orc-form">
+      <div class="orc-row">
+        <div class="orc-field">
+          <label for="nome">Nome completo *</label>
+          <input type="text" id="nome" name="nome" required placeholder="Seu nome">
+        </div>
+        <div class="orc-field">
+          <label for="telefone">WhatsApp / Telefone *</label>
+          <input type="tel" id="telefone" name="telefone" required placeholder="(15) 99999-9999">
+        </div>
+      </div>
+
+      <div class="orc-field">
+        <label for="tipo">Tipo de estofado *</label>
+        <select id="tipo" name="tipo" required>
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option>Sofá</option>
+          <option>Poltrona</option>
+          <option>Cadeira</option>
+          <option>Cabeceira</option>
+          <option>Puf</option>
+          <option>Banco</option>
+          <option>Outro</option>
+        </select>
+      </div>
+
+      <div class="orc-field">
+        <label for="situacao">Descreva a situação atual do móvel *</label>
+        <textarea id="situacao" name="situacao" rows="3" required placeholder="Ex: sofá de 3 lugares, tecido rasgado no braço, espuma amassada..."></textarea>
+      </div>
+
+      <div class="orc-field">
+        <label for="necessidade">O que precisa ser feito? *</label>
+        <textarea id="necessidade" name="necessidade" rows="3" required placeholder="Ex: troca de tecido, troca de espuma, reparo na costura..."></textarea>
+      </div>
+
+      <div class="orc-field">
+        <label for="fotos">Fotos do estofado</label>
+        <input type="file" id="fotos" name="fotos" accept="image/*" multiple>
+        <span class="orc-hint">Você pode selecionar mais de uma foto. Quanto mais ângulos, melhor o orçamento.</span>
+        <div class="orc-preview" id="orcPreview"></div>
+      </div>
+
+      <button type="submit" class="btn btn-primary orc-submit">Enviar Solicitação</button>
+      <p class="orc-disclaimer">* As solicitações ficam salvas neste navegador e são visualizadas na <a href="admin.html">área do administrador</a>. Este é um protótipo — em produção, os dados seriam enviados a um servidor.</p>
+    </form>
+
+    <div class="orc-success" id="orcSuccess">
+      <h3>Solicitação enviada!</h3>
+      <p>Recebemos os dados do seu estofado. Nossa equipe vai analisar e retornar em breve pelo WhatsApp.</p>
+      <a href="index.html" class="btn btn-outline">Voltar para o início</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="border:none;padding-top:0;">
+      <span id="year-copy">© 2026 WOC Estofados. Todos os direitos reservados.</span>
+      <a href="admin.html" style="color:#6b675e;">Área do administrador</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/orcamento.js"></script>
+</body>
+</html>

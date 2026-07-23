@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Administrativo — WOC Estofados</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<header id="site-header" class="scrolled">
+  <div class="wrap nav">
+    <a href="index.html" class="logo">WOC <span>Estofados</span></a>
+    <div class="nav-cta">
+      <span class="admin-tag">Área do administrador</span>
+      <a href="index.html" class="btn btn-outline">Voltar ao site</a>
+    </div>
+  </div>
+</header>
+
+<section class="section admin-section">
+  <div class="wrap">
+    <span class="eyebrow">Painel interno</span>
+    <h1 class="section-title">Orçamentos solicitados</h1>
+    <p class="section-sub">Veja as solicitações enviadas pelo formulário do site (salvas neste navegador) e responda pelo WhatsApp.</p>
+
+    <div class="admin-toolbar">
+      <div class="filter-row" style="margin-top:0;">
+        <button class="filter-btn active" data-status="all">Todos</button>
+        <button class="filter-btn" data-status="novo">Novos</button>
+        <button class="filter-btn" data-status="respondido">Respondidos</button>
+      </div>
+      <span class="admin-count" id="adminCount"></span>
+    </div>
+
+    <div class="admin-list" id="adminList"></div>
+    <p class="admin-empty" id="adminEmpty">Nenhuma solicitação de orçamento ainda. Assim que um cliente enviar o formulário, ela aparece aqui.</p>
+  </div>
+</section>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
