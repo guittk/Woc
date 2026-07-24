@@ -99,8 +99,19 @@ const defaultServicos = [
   { icon: 'banco', titulo: 'Banco de cozinha — par', texto: 'Estofamento resistente para uso diário.', categoria: 'Pufes & Bancos', tipo: 'galeria', fotosCount: 2 },
 ];
 
+const defaultDepoimentos = [
+  { iniciais: 'MF', nome: 'Marina F.', servico: 'Reforma de sofá', texto: 'O sofá voltou parecendo novo. O acabamento ficou melhor do que eu esperava e o prazo foi respeitado.' },
+  { iniciais: 'RC', nome: 'Rodrigo C.', servico: 'Cadeiras de jantar', texto: 'Troquei o tecido de quatro cadeiras e o resultado foi impecável. Atendimento atencioso do início ao fim.' },
+  { iniciais: 'AL', nome: 'Ana L.', servico: 'Cabeceira estofada', texto: 'Pedi orçamento pelo WhatsApp e todo o processo foi simples. A cabeceira ficou linda.' },
+];
+
 const DEFAULT_MIN_ANTES_DEPOIS = 3;
 const DEFAULT_MIN_GALERIA = 6;
+const DEFAULT_CONTATO = {
+  whatsapp: '5515996472451',
+  endereco: 'Endereço a confirmar',
+  horario: 'Seg. a Sáb. — 8h às 18h',
+};
 
 /* Furniture-themed filler used to pad "Trabalhos realizados" up to the configured minimum
    when there aren't enough real entries yet — always clearly tagged "Exemplo". */
@@ -162,6 +173,36 @@ function renderServicos(cfg){
       <p>${s.texto}</p>
     </div>`).join('');
   observeReveal(grid);
+}
+
+/* ---------- Depoimentos ---------- */
+function renderTestimonials(depoimentos){
+  const grid = document.getElementById('testimonialsGrid');
+  const list = (depoimentos && depoimentos.length) ? depoimentos : defaultDepoimentos;
+  grid.innerHTML = list.map(t => `
+    <div class="testi-card reveal">
+      <div class="quote-mark">"</div>
+      <p>${t.texto}</p>
+      <div class="testi-person"><div class="avatar">${t.iniciais}</div><div><strong>${t.nome}</strong><span>${t.servico}</span></div></div>
+    </div>`).join('');
+  observeReveal(grid);
+}
+
+/* ---------- Configurações de contato (WhatsApp, endereço, horário) ---------- */
+function applySettings(settings){
+  const contato = { ...DEFAULT_CONTATO, ...(settings || {}) };
+  document.querySelectorAll('.wa-link').forEach(a => { a.href = `https://wa.me/${contato.whatsapp}`; });
+  const footPhone = document.getElementById('footPhone');
+  if (footPhone) footPhone.textContent = formatPhoneDisplay(contato.whatsapp);
+  const footEndereco = document.getElementById('footEndereco');
+  if (footEndereco) footEndereco.textContent = contato.endereco;
+  const footHorario = document.getElementById('footHorario');
+  if (footHorario) footHorario.textContent = contato.horario;
+}
+function formatPhoneDisplay(digits){
+  const local = digits.replace(/^55/, '');
+  if (local.length === 11) return `(${local.slice(0,2)}) ${local.slice(2,7)}-${local.slice(7)}`;
+  return digits;
 }
 
 /* ---------- Portfólio + Antes/Depois (entries with tipo) ---------- */
@@ -375,6 +416,8 @@ function renderAll(cfg){
   renderFilters(currentPortfolioList);
   currentFilter = 'all';
   renderPortfolio();
+  renderTestimonials(cfg.depoimentos);
+  applySettings(cfg.settings);
   observeReveal(document);
 }
 
@@ -386,7 +429,8 @@ if (typeof wocDb !== 'undefined' && wocDb){
       const remote = snapshot.val();
       if (!remote || !remote.servicos) return;
       const servicos = Object.entries(remote.servicos).map(([id, s]) => ({ id, ...s }));
-      if (servicos.length) renderAll({ servicos, settings: remote.settings });
+      const depoimentos = remote.depoimentos ? Object.entries(remote.depoimentos).map(([id, d]) => ({ id, ...d })) : [];
+      if (servicos.length) renderAll({ servicos, settings: remote.settings, depoimentos });
     })
     .catch(err => console.warn('Não foi possível carregar configurações do site:', err));
 }

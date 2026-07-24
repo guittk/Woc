@@ -49,9 +49,15 @@ Realtime Database has two top-level nodes:
 - `siteConfig/servicos/{pushId}` — the single source of truth for both the "O que fazemos"
   marketing cards and the "Trabalhos realizados" portfolio grid on `index.html` (see Content
   model below). Public **read**, admin-only **write**.
-- `siteConfig/settings` — `{ minAntesDepois, minGaleria }`, the minimum number of before/after
-  and gallery-type portfolio cards the public site should always show (defaults 3 and 6 — see
-  Content model below). Public **read**, admin-only **write**.
+- `siteConfig/settings` — `{ minAntesDepois, minGaleria, whatsapp, endereco, horario }`. The
+  first two are the minimum number of before/after and gallery-type portfolio cards the public
+  site should always show (defaults 3 and 6 — see Content model below). The last three drive
+  every WhatsApp link on the site (`.wa-link` elements: CTA button, footer icon, footer phone
+  text, floating button) plus the footer's "Oficina" address/hours — edited together in the
+  admin's "Contato e oficina" block. Public **read**, admin-only **write**.
+- `siteConfig/depoimentos/{pushId}` — testimonials shown in the "Depoimentos" section
+  (`nome`, `servico`, `texto`, `iniciais` — the last auto-derived from `nome` when saved in the
+  admin). Public **read**, admin-only **write**.
 
 Expected Realtime Database rules (not stored in the repo — configure in the Firebase console):
 

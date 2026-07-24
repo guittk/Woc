@@ -85,7 +85,7 @@
       <div class="config-block">
         <h3>Configurações gerais</h3>
         <p class="config-hint">Número mínimo de trabalhos exibidos em "Trabalhos realizados". Se você ainda não tiver cadastrado o suficiente, o site completa a vitrine com exemplos ilustrativos de estofados (identificados com a etiqueta "Exemplo") até você adicionar fotos reais.</p>
-        <form id="settingsForm" class="orc-row" style="max-width:520px;align-items:end;">
+        <form id="settingsForm" class="orc-row" style="max-width:520px;align-items:end;flex-wrap:wrap;">
           <div class="orc-field">
             <label for="minAntesDepois">Mínimo de Antes/Depois</label>
             <input type="number" id="minAntesDepois" min="0" max="20" required>
@@ -97,6 +97,28 @@
           <button type="submit" class="btn btn-outline">Salvar</button>
         </form>
         <p class="config-status" id="settingsStatus"></p>
+      </div>
+
+      <!-- CONTATO -->
+      <div class="config-block">
+        <h3>Contato e oficina</h3>
+        <p class="config-hint">Usado no botão de WhatsApp, no rodapé e no atalho flutuante do site.</p>
+        <form id="contatoForm" class="orc-form" style="max-width:480px;">
+          <div class="orc-field">
+            <label for="cfgWhatsapp">Número do WhatsApp (com DDD e país, só números)</label>
+            <input type="text" id="cfgWhatsapp" placeholder="5515996472451" required>
+          </div>
+          <div class="orc-field">
+            <label for="cfgEndereco">Endereço da oficina</label>
+            <input type="text" id="cfgEndereco" placeholder="Endereço a confirmar">
+          </div>
+          <div class="orc-field">
+            <label for="cfgHorario">Horário de funcionamento</label>
+            <input type="text" id="cfgHorario" placeholder="Seg. a Sáb. — 8h às 18h">
+          </div>
+          <button type="submit" class="btn btn-outline" style="align-self:flex-start;">Salvar</button>
+        </form>
+        <p class="config-status" id="contatoStatus"></p>
       </div>
 
       <!-- CATEGORIAS -->
@@ -142,6 +164,16 @@
           </div>
           <div class="config-list" id="galeriaList"></div>
         </div>
+      </div>
+
+      <!-- DEPOIMENTOS -->
+      <div class="config-block">
+        <div class="config-block-head">
+          <h3>Depoimentos <span class="config-count" id="depoimentosCount"></span></h3>
+          <button type="button" class="btn btn-outline" id="addDepoimentoBtn">+ Adicionar depoimento</button>
+        </div>
+        <p class="config-hint">Exibidos na seção "Depoimentos" do site.</p>
+        <div class="config-list" id="depoimentosList"></div>
       </div>
     </div>
   </div>
@@ -219,6 +251,37 @@
       <div style="display:flex;gap:12px;">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <button type="button" class="btn btn-outline" id="formModalCancel">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: criar/editar depoimento -->
+<div class="modal-overlay" id="depoimentoModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="depoimentoModalTitle">Novo depoimento</h3>
+      <button type="button" class="modal-close" id="depoimentoModalClose" aria-label="Fechar">✕</button>
+    </div>
+    <form id="depoimentoForm" class="orc-form">
+      <input type="hidden" id="depoimentoEditId">
+      <div class="orc-row">
+        <div class="orc-field">
+          <label for="depoimentoNome">Nome do cliente</label>
+          <input type="text" id="depoimentoNome" required placeholder="Ex: Marina F.">
+        </div>
+        <div class="orc-field">
+          <label for="depoimentoServico">Serviço realizado</label>
+          <input type="text" id="depoimentoServico" required placeholder="Ex: Reforma de sofá">
+        </div>
+      </div>
+      <div class="orc-field">
+        <label for="depoimentoTexto">Depoimento</label>
+        <textarea id="depoimentoTexto" rows="3" required></textarea>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-outline" id="depoimentoModalCancel">Cancelar</button>
       </div>
     </form>
   </div>

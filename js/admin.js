@@ -441,22 +441,108 @@ servicoForm.addEventListener('submit', (e) => {
   });
 });
 
-/* ---- Configurações gerais (mínimos de trabalhos exibidos) ---- */
+/* ---- Configurações gerais (mínimos de trabalhos exibidos + contato) ---- */
+/* Ambos os formulários gravam no mesmo nó siteConfig/settings, então cada um
+   parte do último valor conhecido (settingsCache) para não apagar os campos do outro. */
 const settingsForm = document.getElementById('settingsForm');
 const settingsStatus = document.getElementById('settingsStatus');
 const minAntesDepoisInput = document.getElementById('minAntesDepois');
 const minGaleriaInput = document.getElementById('minGaleria');
 
+const contatoForm = document.getElementById('contatoForm');
+const contatoStatus = document.getElementById('contatoStatus');
+const cfgWhatsappInput = document.getElementById('cfgWhatsapp');
+const cfgEnderecoInput = document.getElementById('cfgEndereco');
+const cfgHorarioInput = document.getElementById('cfgHorario');
+
+let settingsCache = {};
+
 settingsForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const settings = {
-    minAntesDepois: Number(minAntesDepoisInput.value) || 0,
-    minGaleria: Number(minGaleriaInput.value) || 0,
-  };
-  wocDb.ref('siteConfig/settings').set(settings).then(() => {
+  settingsCache.minAntesDepois = Number(minAntesDepoisInput.value) || 0;
+  settingsCache.minGaleria = Number(minGaleriaInput.value) || 0;
+  wocDb.ref('siteConfig/settings').set(settingsCache).then(() => {
     settingsStatus.textContent = 'Salvo!';
     setTimeout(() => settingsStatus.textContent = '', 2000);
   });
+});
+
+contatoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  settingsCache.whatsapp = cfgWhatsappInput.value.trim().replace(/\D/g, '');
+  settingsCache.endereco = cfgEnderecoInput.value.trim();
+  settingsCache.horario = cfgHorarioInput.value.trim();
+  wocDb.ref('siteConfig/settings').set(settingsCache).then(() => {
+    contatoStatus.textContent = 'Salvo!';
+    setTimeout(() => contatoStatus.textContent = '', 2000);
+  });
+});
+
+/* ================= DEPOIMENTOS ================= */
+let depoimentosCache = [];
+const depoimentosListEl = document.getElementById('depoimentosList');
+const depoimentosCountEl = document.getElementById('depoimentosCount');
+const depoimentoModalOverlay = document.getElementById('depoimentoModalOverlay');
+const depoimentoModalClose = document.getElementById('depoimentoModalClose');
+const depoimentoModalCancel = document.getElementById('depoimentoModalCancel');
+const depoimentoModalTitle = document.getElementById('depoimentoModalTitle');
+const depoimentoForm = document.getElementById('depoimentoForm');
+const depoimentoEditId = document.getElementById('depoimentoEditId');
+
+function openDepoimentoModal(existing){
+  depoimentoForm.reset();
+  depoimentoEditId.value = existing ? existing.id : '';
+  depoimentoModalTitle.textContent = existing ? 'Editar depoimento' : 'Novo depoimento';
+  if (existing){
+    document.getElementById('depoimentoNome').value = existing.nome;
+    document.getElementById('depoimentoServico').value = existing.servico;
+    document.getElementById('depoimentoTexto').value = existing.texto;
+  }
+  depoimentoModalOverlay.classList.add('open');
+}
+function closeDepoimentoModal(){ depoimentoModalOverlay.classList.remove('open'); }
+depoimentoModalClose.addEventListener('click', closeDepoimentoModal);
+depoimentoModalCancel.addEventListener('click', closeDepoimentoModal);
+depoimentoModalOverlay.addEventListener('click', (e) => { if (e.target === depoimentoModalOverlay) closeDepoimentoModal(); });
+document.getElementById('addDepoimentoBtn').addEventListener('click', () => openDepoimentoModal(null));
+
+function renderDepoimentos(list){
+  depoimentosCache = list;
+  depoimentosCountEl.textContent = `(${list.length})`;
+  depoimentosListEl.innerHTML = list.map(t => `
+    <div class="config-item">
+      <div class="config-item-body"><strong>${t.nome}</strong><span>${t.servico}</span><span>${t.texto}</span></div>
+      <div class="config-item-actions">
+        <button data-action="edit" data-id="${t.id}">Editar</button>
+        <button data-action="delete" class="danger" data-id="${t.id}">Excluir</button>
+      </div>
+    </div>`).join('') || '<p class="admin-no-photos">Nenhum depoimento cadastrado.</p>';
+}
+
+depoimentosListEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn) return;
+  const t = depoimentosCache.find(t => t.id === btn.dataset.id);
+  if (!t) return;
+  if (btn.dataset.action === 'delete'){
+    openConfirmModal(`Excluir o depoimento de "${t.nome}"?`, () => wocDb.ref(`siteConfig/depoimentos/${t.id}`).remove());
+  } else if (btn.dataset.action === 'edit'){
+    openDepoimentoModal(t);
+  }
+});
+
+depoimentoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nome = document.getElementById('depoimentoNome').value.trim();
+  const depoimento = {
+    nome,
+    servico: document.getElementById('depoimentoServico').value.trim(),
+    texto: document.getElementById('depoimentoTexto').value.trim(),
+    iniciais: nome.split(' ').filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join(''),
+  };
+  const id = depoimentoEditId.value;
+  const ref = id ? wocDb.ref(`siteConfig/depoimentos/${id}`) : wocDb.ref('siteConfig/depoimentos').push();
+  ref.set(depoimento).then(closeDepoimentoModal);
 });
 
 const SEED_SERVICOS = {
@@ -473,18 +559,30 @@ const SEED_SERVICOS = {
   s11: { icon: 'acabamento', titulo: 'Acabamento Premium', texto: 'Detalhes de costura, alinhamento e acabamento que fazem a diferença de perto.' },
 };
 
-const SEED_SETTINGS = { minAntesDepois: 3, minGaleria: 6 };
+const SEED_SETTINGS = {
+  minAntesDepois: 3,
+  minGaleria: 6,
+  whatsapp: '5515996472451',
+  endereco: 'Endereço a confirmar',
+  horario: 'Seg. a Sáb. — 8h às 18h',
+};
 const SEED_CATEGORIAS = {
   sofas: { label: 'Sofás' },
   cadeiras: { label: 'Cadeiras' },
   cabeceiras: { label: 'Cabeceiras' },
   pufes: { label: 'Pufes & Bancos' },
 };
+const SEED_DEPOIMENTOS = {
+  d1: { iniciais: 'MF', nome: 'Marina F.', servico: 'Reforma de sofá', texto: 'O sofá voltou parecendo novo. O acabamento ficou melhor do que eu esperava e o prazo foi respeitado.' },
+  d2: { iniciais: 'RC', nome: 'Rodrigo C.', servico: 'Cadeiras de jantar', texto: 'Troquei o tecido de quatro cadeiras e o resultado foi impecável. Atendimento atencioso do início ao fim.' },
+  d3: { iniciais: 'AL', nome: 'Ana L.', servico: 'Cabeceira estofada', texto: 'Pedi orçamento pelo WhatsApp e todo o processo foi simples. A cabeceira ficou linda.' },
+};
 
 function startConfigListening(){
   const servicosRef = wocDb.ref('siteConfig/servicos');
   const settingsRef = wocDb.ref('siteConfig/settings');
   const categoriasRef = wocDb.ref('siteConfig/categorias');
+  const depoimentosRef = wocDb.ref('siteConfig/depoimentos');
 
   servicosRef.once('value').then((snap) => {
     if (snap.val() === null) wocDb.ref('siteConfig/servicos').set(SEED_SERVICOS);
@@ -495,22 +593,32 @@ function startConfigListening(){
   categoriasRef.once('value').then((snap) => {
     if (snap.val() === null) wocDb.ref('siteConfig/categorias').set(SEED_CATEGORIAS);
   });
+  depoimentosRef.once('value').then((snap) => {
+    if (snap.val() === null) wocDb.ref('siteConfig/depoimentos').set(SEED_DEPOIMENTOS);
+  });
 
   servicosRef.on('value', (snap) => {
     const data = snap.val() || {};
     renderServicosLists(Object.entries(data).map(([id, s]) => ({ id, ...s })));
   });
   settingsRef.on('value', (snap) => {
-    const settings = snap.val() || SEED_SETTINGS;
-    minAntesDepoisInput.value = settings.minAntesDepois;
-    minGaleriaInput.value = settings.minGaleria;
+    settingsCache = snap.val() || SEED_SETTINGS;
+    minAntesDepoisInput.value = settingsCache.minAntesDepois;
+    minGaleriaInput.value = settingsCache.minGaleria;
+    cfgWhatsappInput.value = settingsCache.whatsapp || SEED_SETTINGS.whatsapp;
+    cfgEnderecoInput.value = settingsCache.endereco || SEED_SETTINGS.endereco;
+    cfgHorarioInput.value = settingsCache.horario || SEED_SETTINGS.horario;
   });
   categoriasRef.on('value', (snap) => {
     const data = snap.val() || {};
     renderCategorias(Object.entries(data).map(([id, c]) => ({ id, ...c })));
   });
+  depoimentosRef.on('value', (snap) => {
+    const data = snap.val() || {};
+    renderDepoimentos(Object.entries(data).map(([id, d]) => ({ id, ...d })));
+  });
 
-  configRefs = [servicosRef, settingsRef, categoriasRef];
+  configRefs = [servicosRef, settingsRef, categoriasRef, depoimentosRef];
 }
 
 function stopConfigListening(){
