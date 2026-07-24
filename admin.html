@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/orcamento.css">
 <link rel="stylesheet" href="css/admin.css">
+<script>(function(){var t=localStorage.getItem('wocTheme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body class="admin-body">
 
@@ -18,31 +20,230 @@
     <a href="index.html" class="logo">WOC <span>Estofados</span></a>
     <div class="nav-cta">
       <span class="admin-tag">Área do administrador</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <button class="btn btn-outline admin-logout" id="logoutBtn" style="display:none;">Sair</button>
       <a href="index.html" class="btn btn-outline">Voltar ao site</a>
     </div>
   </div>
 </header>
 
-<section class="section admin-section">
-  <div class="wrap">
-    <span class="eyebrow">Painel interno</span>
-    <h1 class="section-title">Orçamentos solicitados</h1>
-    <p class="section-sub">Veja as solicitações enviadas pelo formulário do site (salvas neste navegador) e responda pelo WhatsApp.</p>
+<section class="login-screen" id="loginSection">
+  <div class="login-card">
+    <div class="login-mark">WOC <span>Estofados</span></div>
+    <span class="eyebrow">Acesso restrito</span>
+    <h1 class="section-title">Entrar no painel</h1>
+    <p class="section-sub">Informe suas credenciais de administrador para acessar o painel interno.</p>
 
-    <div class="admin-toolbar">
-      <div class="filter-row" style="margin-top:0;">
-        <button class="filter-btn active" data-status="all">Todos</button>
-        <button class="filter-btn" data-status="novo">Novos</button>
-        <button class="filter-btn" data-status="respondido">Respondidos</button>
+    <form id="loginForm" class="orc-form">
+      <div class="orc-field">
+        <label for="loginEmail">E-mail</label>
+        <input type="email" id="loginEmail" name="email" required placeholder="seuemail@exemplo.com" autocomplete="username">
       </div>
-      <span class="admin-count" id="adminCount"></span>
-    </div>
-
-    <div class="admin-list" id="adminList"></div>
-    <p class="admin-empty" id="adminEmpty">Nenhuma solicitação de orçamento ainda. Assim que um cliente enviar o formulário, ela aparece aqui.</p>
+      <div class="orc-field">
+        <label for="loginPassword">Senha</label>
+        <input type="password" id="loginPassword" name="password" required placeholder="Sua senha" autocomplete="current-password">
+      </div>
+      <p class="admin-login-error" id="loginError" style="display:none;"></p>
+      <button type="submit" class="btn btn-primary orc-submit" id="loginBtn" style="width:100%;justify-content:center;">Entrar</button>
+    </form>
   </div>
 </section>
 
+<section class="section admin-section" id="adminSection" style="display:none;">
+  <div class="wrap">
+    <span class="eyebrow">Painel interno</span>
+    <h1 class="section-title">Área do administrador</h1>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="orcamentos">Orçamentos</button>
+      <button class="admin-tab" data-tab="config">Configurações do site</button>
+    </div>
+
+    <div class="admin-panel" id="panelOrcamentos">
+      <p class="section-sub">Veja as solicitações enviadas pelo formulário do site e responda pelo WhatsApp.</p>
+
+      <div class="admin-toolbar">
+        <div class="filter-row" style="margin-top:0;">
+          <button class="filter-btn active" data-status="all">Todos</button>
+          <button class="filter-btn" data-status="novo">Novos</button>
+          <button class="filter-btn" data-status="respondido">Respondidos</button>
+        </div>
+        <span class="admin-count" id="adminCount"></span>
+      </div>
+
+      <div class="admin-list" id="adminList"></div>
+      <p class="admin-empty" id="adminEmpty">Nenhuma solicitação de orçamento ainda. Assim que um cliente enviar o formulário, ela aparece aqui.</p>
+    </div>
+
+    <div class="admin-panel" id="panelConfig" style="display:none;">
+      <p class="section-sub">Organize o que aparece no site: cards de serviço em "O que fazemos" e os trabalhos com fotos em "Trabalhos realizados". Clique em Editar/Novo para abrir a janela de edição.</p>
+
+      <!-- CONFIGURAÇÕES GERAIS -->
+      <div class="config-block">
+        <h3>Configurações gerais</h3>
+        <p class="config-hint">Número mínimo de trabalhos exibidos em "Trabalhos realizados". Se você ainda não tiver cadastrado o suficiente, o site completa a vitrine com exemplos ilustrativos de estofados (identificados com a etiqueta "Exemplo") até você adicionar fotos reais.</p>
+        <form id="settingsForm" class="orc-row" style="max-width:520px;align-items:end;">
+          <div class="orc-field">
+            <label for="minAntesDepois">Mínimo de Antes/Depois</label>
+            <input type="number" id="minAntesDepois" min="0" max="20" required>
+          </div>
+          <div class="orc-field">
+            <label for="minGaleria">Mínimo de trabalhos (galeria)</label>
+            <input type="number" id="minGaleria" min="0" max="20" required>
+          </div>
+          <button type="submit" class="btn btn-outline">Salvar</button>
+        </form>
+        <p class="config-status" id="settingsStatus"></p>
+      </div>
+
+      <!-- CATEGORIAS -->
+      <div class="config-block">
+        <h3>Categorias</h3>
+        <p class="config-hint">Usadas para organizar e filtrar os trabalhos em "Trabalhos realizados". Selecionáveis ao criar um antes/depois ou um trabalho de galeria.</p>
+        <div class="config-list" id="categoriasList"></div>
+        <form id="categoriaForm" class="config-inline-form">
+          <input type="hidden" id="categoriaEditId">
+          <input type="text" id="categoriaLabel" placeholder="Nome da categoria (ex: Sofás)" required>
+          <button type="submit" class="btn btn-outline" id="categoriaSubmitBtn">Adicionar</button>
+          <button type="button" class="btn admin-btn-danger" id="categoriaCancelEdit" style="display:none;">Cancelar</button>
+        </form>
+      </div>
+
+      <!-- O QUE FAZEMOS -->
+      <div class="config-block">
+        <div class="config-block-head">
+          <h3>O que fazemos <span class="config-count" id="marketingCount"></span></h3>
+          <button type="button" class="btn btn-outline" id="addMarketingBtn">+ Novo serviço</button>
+        </div>
+        <p class="config-hint">Cards de serviço sem fotos, mostrados na seção "O que fazemos" do site.</p>
+        <div class="config-list" id="marketingList"></div>
+      </div>
+
+      <!-- TRABALHOS REALIZADOS -->
+      <div class="config-block">
+        <h3>Trabalhos realizados</h3>
+        <p class="config-hint">Tudo aqui aparece na seção "Trabalhos realizados" do site, com fotos reais que você envia.</p>
+
+        <div class="config-subsection">
+          <div class="config-block-head">
+            <h4>Antes / Depois <span class="config-count" id="antesDepoisCount"></span></h4>
+            <button type="button" class="btn btn-outline" id="addAntesDepoisBtn">+ Adicionar antes/depois</button>
+          </div>
+          <div class="config-list" id="antesDepoisList"></div>
+        </div>
+
+        <div class="config-subsection">
+          <div class="config-block-head">
+            <h4>Galeria de trabalhos <span class="config-count" id="galeriaCount"></span></h4>
+            <button type="button" class="btn btn-outline" id="addGaleriaBtn">+ Adicionar trabalho</button>
+          </div>
+          <div class="config-list" id="galeriaList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL: criar/editar serviço -->
+<div class="modal-overlay" id="formModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="formModalTitle">Novo serviço</h3>
+      <button type="button" class="modal-close" id="formModalClose" aria-label="Fechar">✕</button>
+    </div>
+    <form id="servicoForm" class="orc-form">
+      <input type="hidden" id="servicoEditId">
+      <input type="hidden" id="servicoContext">
+
+      <div class="orc-row" id="campoIconRow">
+        <div class="orc-field">
+          <label for="servicoIcon">Ícone</label>
+          <select id="servicoIcon">
+            <option value="sofa">Sofá</option>
+            <option value="cadeira">Cadeira</option>
+            <option value="cabeceira">Cabeceira</option>
+            <option value="banco">Banco</option>
+            <option value="puf">Puf</option>
+            <option value="placa">Placa estofada</option>
+            <option value="almofada">Almofada</option>
+            <option value="tecido">Tecido</option>
+            <option value="espuma">Espuma</option>
+            <option value="reparo">Reparo</option>
+            <option value="acabamento">Acabamento</option>
+            <option value="generic">Genérico</option>
+          </select>
+        </div>
+        <div class="orc-field">
+          <label for="servicoTitulo">Nome</label>
+          <input type="text" id="servicoTitulo" required placeholder="Ex: Reforma de Sofás">
+        </div>
+      </div>
+      <div class="orc-field">
+        <label for="servicoTexto">Descrição</label>
+        <textarea id="servicoTexto" rows="2" required></textarea>
+      </div>
+      <div class="orc-field" id="campoCategoria" style="display:none;">
+        <label for="servicoCategoria">Categoria (usada nos filtros do portfólio)</label>
+        <select id="servicoCategoria"></select>
+      </div>
+
+      <div class="orc-field" id="campoGaleria" style="display:none;">
+        <label for="servicoFotos">Fotos (pode selecionar várias)</label>
+        <input type="file" id="servicoFotos" accept="image/*" multiple>
+        <div class="orc-preview" id="servicoFotosPreview"></div>
+      </div>
+
+      <div id="campoAntesDepois" style="display:none;flex-direction:column;gap:22px;">
+        <div class="orc-row">
+          <div class="orc-field">
+            <label for="servicoAntes">Foto "Antes"</label>
+            <input type="file" id="servicoAntes" accept="image/*">
+            <div class="orc-preview" id="servicoAntesPreview"></div>
+          </div>
+          <div class="orc-field">
+            <label for="servicoDepois">Foto "Depois"</label>
+            <input type="file" id="servicoDepois" accept="image/*">
+            <div class="orc-preview" id="servicoDepoisPreview"></div>
+          </div>
+        </div>
+        <div class="orc-field">
+          <label for="servicoNota">Nota (ex: material usado)</label>
+          <input type="text" id="servicoNota" placeholder="Ex: Linho cru">
+        </div>
+      </div>
+
+      <p class="config-status" id="servicoStatus"></p>
+      <div style="display:flex;gap:12px;">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-outline" id="formModalCancel">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: confirmar exclusão -->
+<div class="modal-overlay" id="confirmModalOverlay">
+  <div class="modal modal-small">
+    <div class="modal-head">
+      <h3>Confirmar exclusão</h3>
+      <button type="button" class="modal-close" id="confirmModalClose" aria-label="Fechar">✕</button>
+    </div>
+    <p id="confirmModalMessage"></p>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:26px;">
+      <button type="button" class="btn btn-outline" id="confirmModalCancel">Cancelar</button>
+      <button type="button" class="btn admin-btn-danger" id="confirmModalOk">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+<script src="js/theme.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>

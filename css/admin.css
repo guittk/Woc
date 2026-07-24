@@ -1,4 +1,30 @@
 .admin-section{padding-top:150px;}
+
+/* Login screen */
+.login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:150px 24px 60px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(169,129,47,.10), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(107,63,42,.12), transparent 45%),
+    var(--bg);
+}
+.login-card{
+  width:100%;max-width:420px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:44px 40px;box-shadow:var(--shadow-lift);
+}
+.login-mark{
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:19px;letter-spacing:.02em;
+  margin-bottom:26px;color:var(--ink);
+}
+.login-mark span{color:var(--gold);}
+.login-card .eyebrow{margin-bottom:10px;}
+.login-card .section-title{font-size:26px;margin-bottom:10px;}
+.login-card .section-sub{font-size:14px;margin-bottom:30px;max-width:none;}
+.login-card .orc-form{gap:18px;}
+.admin-login-error{
+  font-size:13px;color:#b3462f;background:rgba(179,70,47,.08);border:1px solid rgba(179,70,47,.25);
+  border-radius:var(--radius);padding:10px 14px;
+}
 .admin-tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;}
 
 .admin-toolbar{display:flex;justify-content:space-between;align-items:center;margin-top:40px;flex-wrap:wrap;gap:14px;}
@@ -8,7 +34,7 @@
 .admin-empty.show{display:block;}
 
 .admin-list{display:flex;flex-direction:column;gap:20px;margin-top:32px;}
-.admin-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;}
+.admin-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow-soft);}
 .admin-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
 .admin-card-head h3{font-size:17px;margin-bottom:4px;}
 .admin-meta{font-size:13px;color:var(--graphite-soft);}
@@ -21,7 +47,7 @@
 
 .admin-grid-info{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
 .admin-grid-info div h5{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--graphite-soft);margin-bottom:6px;}
-.admin-grid-info div p{font-size:14px;color:var(--charcoal);white-space:pre-wrap;}
+.admin-grid-info div p{font-size:14px;color:var(--ink);white-space:pre-wrap;}
 
 .admin-photos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
 .admin-photos img{width:84px;height:84px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--line);cursor:pointer;}
@@ -35,3 +61,71 @@
 @media (max-width:600px){
   .admin-grid-info{grid-template-columns:1fr;}
 }
+
+/* Admin tabs */
+.admin-tabs{display:flex;gap:10px;margin-top:36px;border-bottom:1px solid var(--line);}
+.admin-tab{
+  padding:12px 4px;margin-right:22px;background:none;border:none;border-bottom:2px solid transparent;
+  font-size:14.5px;font-weight:600;color:var(--graphite-soft);cursor:pointer;transition:color .25s,border-color .25s;
+}
+.admin-tab.active,.admin-tab:hover{color:var(--ink);border-bottom-color:var(--gold);}
+.admin-panel{margin-top:8px;}
+
+/* Config blocks */
+.config-block{margin-top:44px;padding-top:36px;border-top:1px solid var(--line);}
+.config-block:first-child{margin-top:36px;}
+.config-block h3{font-size:19px;margin-bottom:6px;}
+.config-hint{font-size:13px;color:var(--graphite-soft);margin-bottom:20px;max-width:640px;}
+.config-status{font-size:13px;color:var(--gold);min-height:18px;}
+
+.config-block-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.config-block-head h3,.config-block-head h4{margin-bottom:0;}
+.config-count{font-size:12.5px;font-weight:500;color:var(--graphite-soft);text-transform:none;letter-spacing:0;}
+
+.config-subsection{margin-top:30px;}
+.config-subsection:first-child{margin-top:20px;}
+.config-subsection h4{font-size:15.5px;}
+
+.config-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;margin-bottom:8px;}
+.config-item{
+  display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:12px 16px;
+}
+.config-item.is-placeholder{border-style:dashed;opacity:.85;}
+.config-item-thumb{width:52px;height:52px;border-radius:var(--radius);object-fit:cover;background:var(--bg-alt);flex-shrink:0;}
+.config-item-body{flex:1;min-width:0;}
+.config-item-body strong{display:block;font-size:14px;color:var(--ink);}
+.config-item-body span{display:block;font-size:12.5px;color:var(--graphite-soft);}
+.config-item-actions{display:flex;gap:8px;flex-shrink:0;}
+.config-item-actions button{
+  border:1px solid var(--line);background:transparent;border-radius:var(--radius);
+  padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--graphite);transition:all .2s;
+}
+.config-item-actions button:hover{border-color:var(--gold);color:var(--gold);}
+.config-item-actions button.danger:hover{border-color:#b3462f;color:#b3462f;}
+
+.config-inline-form{display:flex;gap:10px;flex-wrap:wrap;max-width:520px;}
+.config-inline-form input[type="text"]{
+  flex:1;min-width:200px;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);
+  padding:11px 14px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);
+}
+
+/* Modals */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:300;background:rgba(15,14,12,.55);
+  align-items:flex-start;justify-content:center;padding:64px 20px;overflow-y:auto;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  width:100%;max-width:640px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:32px 34px;box-shadow:var(--shadow-lift);
+}
+.modal.modal-small{max-width:440px;}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.modal-head h3{font-size:19px;margin-bottom:0;}
+.modal-close{
+  background:none;border:none;font-size:18px;line-height:1;cursor:pointer;color:var(--graphite-soft);
+  padding:4px;transition:color .2s;
+}
+.modal-close:hover{color:var(--ink);}
+.modal p{color:var(--graphite);font-size:14.5px;}

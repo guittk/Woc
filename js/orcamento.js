@@ -8,7 +8,7 @@ panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel
 const yearEl = document.getElementById('year-copy');
 if (yearEl) yearEl.textContent = `© ${new Date().getFullYear()} WOC Estofados. Todos os direitos reservados.`;
 
-/* ---------- Photo previews (resized to keep localStorage small) ---------- */
+/* ---------- Photo previews (resized to keep upload size small) ---------- */
 const fotosInput = document.getElementById('fotos');
 const orcPreview = document.getElementById('orcPreview');
 let selectedPhotos = []; // array of dataURLs
@@ -60,12 +60,12 @@ fotosInput.addEventListener('change', async () => {
 /* ---------- Form submit ---------- */
 const form = document.getElementById('orcamentoForm');
 const successBox = document.getElementById('orcSuccess');
+const submitBtn = form.querySelector('.orc-submit');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const request = {
-    id: Date.now(),
     data: new Date().toISOString(),
     status: 'novo',
     nome: form.nome.value.trim(),
@@ -76,15 +76,18 @@ form.addEventListener('submit', (e) => {
     fotos: selectedPhotos,
   };
 
-  const stored = JSON.parse(localStorage.getItem('wocOrcamentos') || '[]');
-  stored.unshift(request);
-  try {
-    localStorage.setItem('wocOrcamentos', JSON.stringify(stored));
-  } catch (err) {
-    alert('Não foi possível salvar todas as fotos (limite de armazenamento do navegador). Tente enviar menos fotos ou fotos menores.');
-    return;
-  }
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando...';
 
-  form.style.display = 'none';
-  successBox.classList.add('show');
+  wocDb.ref('orcamentos').push(request)
+    .then(() => {
+      form.style.display = 'none';
+      successBox.classList.add('show');
+    })
+    .catch((err) => {
+      console.error(err);
+      alert('Não foi possível enviar sua solicitação agora. Tente novamente em instantes.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar Solicitação';
+    });
 });
