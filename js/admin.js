@@ -8,7 +8,7 @@ function formatDate(iso){
 function whatsappLink(telefone, nome){
   const digits = telefone.replace(/\D/g, '');
   const withCountry = digits.startsWith('55') ? digits : '55' + digits;
-  const message = `Olá ${nome.split(' ')[0]}! Vimos seu pedido de orçamento na WOC Estofados e vamos te passar os detalhes.`;
+  const message = `Olá ${nome.split(' ')[0]}! Vimos seu pedido de orçamento na W.O.C. Estofados e vamos te passar os detalhes.`;
   return `https://wa.me/${withCountry}?text=${encodeURIComponent(message)}`;
 }
 
@@ -455,6 +455,17 @@ const cfgWhatsappInput = document.getElementById('cfgWhatsapp');
 const cfgEnderecoInput = document.getElementById('cfgEndereco');
 const cfgHorarioInput = document.getElementById('cfgHorario');
 
+const sectionsForm = document.getElementById('sectionsForm');
+const sectionsStatus = document.getElementById('sectionsStatus');
+const SECTION_CHECKBOXES = {
+  portfolio: document.getElementById('secPortfolio'),
+  servicos: document.getElementById('secServicos'),
+  comoFunciona: document.getElementById('secComoFunciona'),
+  sobre: document.getElementById('secSobre'),
+  depoimentos: document.getElementById('secDepoimentos'),
+};
+const DEFAULT_SECTIONS = { portfolio: true, servicos: true, comoFunciona: true, sobre: true, depoimentos: true };
+
 let settingsCache = {};
 
 settingsForm.addEventListener('submit', (e) => {
@@ -464,6 +475,18 @@ settingsForm.addEventListener('submit', (e) => {
   wocDb.ref('siteConfig/settings').set(settingsCache).then(() => {
     settingsStatus.textContent = 'Salvo!';
     setTimeout(() => settingsStatus.textContent = '', 2000);
+  });
+});
+
+sectionsForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  settingsCache.sections = {};
+  Object.entries(SECTION_CHECKBOXES).forEach(([key, checkbox]) => {
+    settingsCache.sections[key] = checkbox.checked;
+  });
+  wocDb.ref('siteConfig/settings').set(settingsCache).then(() => {
+    sectionsStatus.textContent = 'Salvo!';
+    setTimeout(() => sectionsStatus.textContent = '', 2000);
   });
 });
 
@@ -565,6 +588,7 @@ const SEED_SETTINGS = {
   whatsapp: '5515996472451',
   endereco: 'Endereço a confirmar',
   horario: 'Seg. a Sáb. — 8h às 18h',
+  sections: { ...DEFAULT_SECTIONS },
 };
 const SEED_CATEGORIAS = {
   sofas: { label: 'Sofás' },
@@ -608,6 +632,10 @@ function startConfigListening(){
     cfgWhatsappInput.value = settingsCache.whatsapp || SEED_SETTINGS.whatsapp;
     cfgEnderecoInput.value = settingsCache.endereco || SEED_SETTINGS.endereco;
     cfgHorarioInput.value = settingsCache.horario || SEED_SETTINGS.horario;
+    const sections = { ...DEFAULT_SECTIONS, ...(settingsCache.sections || {}) };
+    Object.entries(SECTION_CHECKBOXES).forEach(([key, checkbox]) => {
+      checkbox.checked = sections[key] !== false;
+    });
   });
   categoriasRef.on('value', (snap) => {
     const data = snap.val() || {};

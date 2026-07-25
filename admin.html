@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Administrativo — WOC Estofados</title>
+<title>Painel Administrativo — W.O.C. Estofados</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2">
-<link rel="stylesheet" href="css/orcamento.css?v=2">
-<link rel="stylesheet" href="css/admin.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/orcamento.css?v=3">
+<link rel="stylesheet" href="css/admin.css?v=4">
 <script>(function(){var t=localStorage.getItem('wocTheme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body class="admin-body">
 
 <header id="site-header" class="scrolled">
   <div class="wrap nav">
-    <a href="index.html" class="logo">WOC <span>Estofados</span></a>
+    <a href="index.html" class="logo">W.O.C. <span>Estofados</span></a>
     <div class="nav-cta">
       <span class="admin-tag">Área do administrador</span>
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
@@ -32,7 +32,7 @@
 
 <section class="login-screen" id="loginSection">
   <div class="login-card">
-    <div class="login-mark">WOC <span>Estofados</span></div>
+    <div class="login-mark">W.O.C. <span>Estofados</span></div>
     <span class="eyebrow">Acesso restrito</span>
     <h1 class="section-title">Entrar no painel</h1>
     <p class="section-sub">Informe suas credenciais de administrador para acessar o painel interno.</p>
@@ -97,6 +97,53 @@
           <button type="submit" class="btn btn-outline">Salvar</button>
         </form>
         <p class="config-status" id="settingsStatus"></p>
+      </div>
+
+      <!-- SEÇÕES DO SITE -->
+      <div class="config-block">
+        <h3>Seções do site</h3>
+        <p class="config-hint">Ative ou desative seções inteiras da página inicial. O conteúdo cadastrado continua salvo, só deixa de aparecer no site — e as cores das seções restantes se reajustam sozinhas.</p>
+        <form id="sectionsForm">
+          <div class="section-toggle-list">
+            <label class="section-toggle-item">
+              <div class="section-toggle-info">
+                <strong>Portfólio</strong>
+                <span>Trabalhos com fotos e comparador antes/depois.</span>
+              </div>
+              <span class="switch"><input type="checkbox" id="secPortfolio" checked><span class="switch-track"></span></span>
+            </label>
+            <label class="section-toggle-item">
+              <div class="section-toggle-info">
+                <strong>O que fazemos</strong>
+                <span>Cards de serviço sem fotos.</span>
+              </div>
+              <span class="switch"><input type="checkbox" id="secServicos" checked><span class="switch-track"></span></span>
+            </label>
+            <label class="section-toggle-item">
+              <div class="section-toggle-info">
+                <strong>Como funciona</strong>
+                <span>Passo a passo do orçamento à entrega.</span>
+              </div>
+              <span class="switch"><input type="checkbox" id="secComoFunciona" checked><span class="switch-track"></span></span>
+            </label>
+            <label class="section-toggle-item">
+              <div class="section-toggle-info">
+                <strong>Sobre / Quem somos</strong>
+                <span>Texto de apresentação da oficina.</span>
+              </div>
+              <span class="switch"><input type="checkbox" id="secSobre" checked><span class="switch-track"></span></span>
+            </label>
+            <label class="section-toggle-item">
+              <div class="section-toggle-info">
+                <strong>Depoimentos</strong>
+                <span>Avaliações de clientes.</span>
+              </div>
+              <span class="switch"><input type="checkbox" id="secDepoimentos" checked><span class="switch-track"></span></span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-outline">Salvar</button>
+        </form>
+        <p class="config-status" id="sectionsStatus"></p>
       </div>
 
       <!-- CONTATO -->
@@ -307,6 +354,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="js/firebase-init.js?v=2"></script>
 <script src="js/theme.js?v=2"></script>
-<script src="js/admin.js?v=2"></script>
+<script src="js/admin.js?v=3"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@ panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel
 
 // Footer year
 const yearEl = document.getElementById('year-copy');
-if (yearEl) yearEl.textContent = `© ${new Date().getFullYear()} WOC Estofados. Todos os direitos reservados.`;
+if (yearEl) yearEl.textContent = `© ${new Date().getFullYear()} W.O.C. Estofados. Todos os direitos reservados.`;
 
 /* ---------- Photo previews (resized to keep upload size small) ---------- */
 const fotosInput = document.getElementById('fotos');

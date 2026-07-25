@@ -7,11 +7,12 @@
 .orc-field input[type="tel"],
 .orc-field input[type="email"],
 .orc-field input[type="password"],
+.orc-field input[type="number"],
 .orc-field select,
 .orc-field textarea{
   border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);
   padding:12px 14px;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);
-  resize:vertical;
+  resize:vertical;width:100%;
 }
 .orc-field input:focus,
 .orc-field select:focus,

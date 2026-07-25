@@ -113,6 +113,31 @@ const DEFAULT_CONTATO = {
   horario: 'Seg. a Sáb. — 8h às 18h',
 };
 
+/* ---------- Visibilidade de seções (configurável no painel) ---------- */
+const DEFAULT_SECTIONS = { portfolio: true, servicos: true, comoFunciona: true, sobre: true, depoimentos: true };
+const SECTION_IDS = { portfolio: 'portfolio', servicos: 'servicos', comoFunciona: 'como-funciona', sobre: 'sobre', depoimentos: 'depoimentos' };
+function applySectionVisibility(settings){
+  const sections = { ...DEFAULT_SECTIONS, ...((settings && settings.sections) || {}) };
+  let altToggle = false;
+  Object.entries(SECTION_IDS).forEach(([key, id]) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const visible = sections[key] !== false;
+    section.style.display = visible ? '' : 'none';
+    const seam = section.previousElementSibling;
+    if (seam && seam.classList.contains('seam-wrap')) seam.style.display = visible ? '' : 'none';
+    document.querySelectorAll(`a[href="#${id}"]`).forEach(a => {
+      const target = a.closest('li') || a;
+      target.style.display = visible ? '' : 'none';
+    });
+    // Reatribui a cor alternada só entre as seções visíveis, para nunca haver duas iguais seguidas.
+    if (visible){
+      section.classList.toggle('alt', altToggle);
+      altToggle = !altToggle;
+    }
+  });
+}
+
 /* Furniture-themed filler used to pad "Trabalhos realizados" up to the configured minimum
    when there aren't enough real entries yet — always clearly tagged "Exemplo". */
 const PLACEHOLDER_POOL = [
@@ -418,6 +443,7 @@ function renderAll(cfg){
   renderPortfolio();
   renderTestimonials(cfg.depoimentos);
   applySettings(cfg.settings);
+  applySectionVisibility(cfg.settings);
   observeReveal(document);
 }
 
@@ -437,4 +463,4 @@ if (typeof wocDb !== 'undefined' && wocDb){
 
 // Footer year
 document.getElementById('year-copy').textContent =
-  `© ${new Date().getFullYear()} WOC Estofados. Todos os direitos reservados.`;
+  `© ${new Date().getFullYear()} W.O.C. Estofados. Todos os direitos reservados.`;
